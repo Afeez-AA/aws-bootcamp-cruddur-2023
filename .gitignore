@@ -1,6 +1,6 @@
-aws
 _docs
 backend-flask
 frontend-react-js
 journal
 README.md
+.gitpod.yml
