@@ -1,11 +1,8 @@
 backend-flask
-frontend-react-js
-journal
 README.md
 .gitpod.yml
-_docs/assets/cruddur-screenshot.png
-_docs/assets/cruddur-screenshot.png
-journal/week1.md
+_docs
+journal/week0.md
 journal/week2.md
 journal/week3.md
 journal/week4.md
@@ -18,3 +15,6 @@ journal/week10.md
 journal/week11.md
 journal/week12.md
 journal/week13.md
+journal/week1.md
+aws
+frontend-react-js
