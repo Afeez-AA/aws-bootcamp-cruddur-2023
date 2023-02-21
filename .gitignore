@@ -1,6 +1,6 @@
 README.md
-.gitpod.yml
 _docs
 aws
 docker-compose.yml
 journal
+docker/**/*
