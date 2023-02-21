@@ -1,8 +1,7 @@
-backend-flask
+
 README.md
 .gitpod.yml
 _docs
 aws
-frontend-react-js
 docker-compose.yml
 journal
