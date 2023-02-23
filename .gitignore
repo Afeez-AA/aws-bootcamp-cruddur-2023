@@ -1,6 +1,4 @@
 README.md
-_docs
 aws
 docker-compose.yml
-journal
 docker/**/*
