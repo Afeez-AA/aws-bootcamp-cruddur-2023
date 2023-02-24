@@ -273,10 +273,7 @@ EXPOSE ${PORT}
 CMD ["/bin/bash", "start.sh"]
 
 ```
-Step3: Give the `start.sh` executable permission, then build the images and run the containers.
-```sh
-    chmod +x start.sh
-```
+Step3: Then build the images and run the containers.
 ```sh
     docker compose up
 ```
@@ -292,7 +289,25 @@ Step3: Give the `start.sh` executable permission, then build the images and run 
 ```
 
 ### 4. **IMPLEMENT A HEALTHCHECK IN THE V3 DOCKER COMPOSE FILE**
-### 5. **IMPLEMENTED BEST PRACTICE FOR THE DOCKER FILES ABOVE**
+Add the following code to the services in the `docker compose.yml` file.
+Backend:
+```sh
+healthcheck:
+      test: curl --fail "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}/api/activities/home" || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+```
+FRONTEND SERVICE;
+```sh
+   healthcheck:
+      test: curl --fail "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}" || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+```
+### 5. **IMPLEMENTED BEST PRACTICE FOR THE DOCKER CONFIGURATIONS FILE ABOVE**
 ### 6. **INSTALLED DOCKER ON MY LOCALMACHINE AND GOT THE SAME CONTAINERS RUNNING.**
 Step1: Install Docker
 ```sh
