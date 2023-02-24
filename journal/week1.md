@@ -8,9 +8,9 @@
 2.  Document the notification endpoint
 3.  Write a flask endpoint for notification
 4. Write a React Page for Notifications
-4.  Run DynamoDB Local Container and ensure it works
-5.  Run Postgres Container and ensure it works
-### **CONTAINERIZE THE APPLICATION** 
+5.  Run DynamoDB Local Container and ensure it works
+6.  Run Postgres Container and ensure it works
+### 1. **CONTAINERIZE THE APPLICATION** 
 1. BACKEND
     * Add the [Backend Dockerfile](../backend-flask/Dockerfile) in the `./backend-flask` directory.
 
@@ -61,7 +61,7 @@
 * Verify that the multiple containers are up and running from your browser;
 ![img](/img1/signed%20in%20to%20the%20cruddr.png)
 
-### **DOCUMENT THE NOTIFICATION ENDPOINT**
+### 2. **DOCUMENT THE NOTIFICATION ENDPOINT**
 Add an endpoint for the notification tab in the [openapi-3.0.yml](../backend-flask/openapi-3.0.yml) file
 ```sh
 /api/activities/notifications:
@@ -84,7 +84,7 @@ Add an endpoint for the notification tab in the [openapi-3.0.yml](../backend-fla
 
 
 
-### **WRITE A FLASK ENDPOINT FOR NOTIFICATION**
+### 3. **WRITE A FLASK ENDPOINT FOR NOTIFICATION**
 Step1: Update the  [app.py](../backend-flask/app.py) with the following codes
 ```sh
     @app.route("/api/activities/notifications", methods=['GET'])
@@ -100,7 +100,7 @@ Step2: Create the [notifications_activities](../backend-flask/services/notificat
 Step3: Verify from the browser
 ![img](/img1/notification%20web%20browser.png)
 
-### **WRITE A REACT PAGE FOR NOTIFICATIONS**
+### 4. **WRITE A REACT PAGE FOR NOTIFICATIONS**
 Step1: Update the [App.js](../frontend-react-js/src/App.js) with the following codes
 ```sh
     path: "/notifications",
@@ -118,7 +118,7 @@ Step2: Create and the following files;
 Step 3: Verify from the browser
 ![img](/img1/notification%20web%20page.png)
 
-### **RUN DYNAMODB ON THE LOCAL CONTAINER AND ENSURE IT WORKS**
+### 5. **RUN DYNAMODB ON THE LOCAL CONTAINER AND ENSURE IT WORKS**
 Step1: Lets integrate the following into our existing docker compose file
 ```sh
 services:
@@ -176,7 +176,7 @@ aws dynamodb scan --table-name cruddur_cruds --query "Items" --endpoint-url http
 ```
 ![img](/img1/dynamo%20db%20terminal%20verified.png)
 
-### **RUN POSTGRES CONTAINER AND ENSURE IT WORKS**
+### 6. **RUN POSTGRES CONTAINER AND ENSURE IT WORKS**
 Step1:Lets integrate the following into our existing docker compose file;
 ```sh
 services:
@@ -219,4 +219,88 @@ volumes:
 Step4: Verify
 ![img](/img1/postgres%20verified.png)
 ## **HOMEWORK CHALLENGE**
-1. 
+1. Run the dockerfile CMD as an external script
+2. Push and tag a image to DockerHub
+3. Use multi-stage building for a Dockerfile build
+4. Implement a healthcheck in the V3 Docker compose file
+5. Researched the best practices of Dockerfiles and implemented it in your Dockerfile
+6. Installed Docker on my localmachine and got the same containers running.
+7. Launch an EC2 instance that has docker installed, and pull a container
+### 1. **RUN THE DOCKERFILE CMD AS AN EXTERNAL SCRIPT**
+Step1: Backend--Create a start.sh file
+```sh
+#!/bin/sh
+python3 -m flask run --host=0.0.0.0 --port=4567
+
+```
+Step2: Update the docker file
+```sh
+    FROM python:3.10-slim-buster
+
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+CMD [ "sh", "start.sh" ]
+
+```
+Step3: Give the `start.sh` executable permission, then build the image and run the container.
+```sh
+    chmod +x start.sh
+```
+### 2. **PUSH AND TAG A IMAGE TO DOCKERHUB**
+![img](/img1/pushed%20docker%20image%20terminal.png)
+![img](/img1/pushed%20docker%20image%20web.png)
+
+### 6. **INSTALLED DOCKER ON MY LOCALMACHINE AND GOT THE SAME CONTAINERS RUNNING.**
+Step1: Install Docker
+```sh
+sudo apt-get update
+
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+```
+Step2: Verify docker installation
+![img](../img1/docker-localmachine%20installed.png)
+
+Step3: Run the container
+![Alt text](../img1/docker%20compose%20local%20machine.png)
+
+### 7. LAUNCH AN EC2 INSTANCE THAT HAS DOCKER INSTALLED, AND PULL A CONTAINER
+Step1: Launch an ec2 instance using `user data script` to install docker on the machine.
+```sh
+#!/bin/bash
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+sudo usermod -aG docker ubuntu
+
+```
+Step2: Pull a container then run it.
+![Alt text](../img1/pull%20docker%20image.png)
+
+***Thank you!!! See you next week.***
