@@ -1,14 +1,16 @@
 # Week 1 — App Containerization
 ## Tasks completed for week 1
 ***
-## Checklist Assignment 
+1. CHECKLIST ASSIGNMENT
+2. HOMEWORK CHALLENGE 
+## **CHECKLIST ASSIGNMENT** 
 1. Containerize the application
 2.  Document the notification endpoint
 3.  Write a flask endpoint for notification
 4. Write a React Page for Notifications
 4.  Run DynamoDB Local Container and ensure it works
 5.  Run Postgres Container and ensure it works
-### CONTAINERIZE THE APPLICATION 
+### **CONTAINERIZE THE APPLICATION** 
 1. BACKEND
     * Add the [Backend Dockerfile](../backend-flask/Dockerfile) in the `./backend-flask` directory.
 
@@ -59,7 +61,7 @@
 * Verify that the multiple containers are up and running from your browser;
 ![img](/img1/signed%20in%20to%20the%20cruddr.png)
 
-### DOCUMENT THE NOTIFICATION ENDPOINT
+### **DOCUMENT THE NOTIFICATION ENDPOINT**
 Add an endpoint for the notification tab
 ```sh
 /api/activities/notifications:
@@ -82,7 +84,7 @@ Add an endpoint for the notification tab
 
 
 
-### WRITE A FLASK ENDPOINT FOR NOTIFICATION
+### **WRITE A FLASK ENDPOINT FOR NOTIFICATION**
 Step1: Update the  [app.py](../backend-flask/app.py) with the following codes
 ```sh
     @app.route("/api/activities/notifications", methods=['GET'])
@@ -95,4 +97,27 @@ from services.notifications_activities import *
 ```
 Step2: Create the [notifications_activities](../backend-flask/services/notifications_activities.py) file.
 
-Step3:
+Step3: Verify from the browser
+![img](/img1/notification%20web%20browser.png)
+
+### **WRITE A REACT PAGE FOR NOTIFICATIONS**
+Step1: Update the [App.js](../frontend-react-js/src/App.js) with the following codes
+```sh
+    path: "/notifications",
+    element: <NotificationsFeedPage />
+  },
+```
+```
+import NotificationsFeedPage from './pages/NotificationsFeedPage.js';
+```
+
+Step2: Create and the following files;
+* [NotificationsFeedPage.css](../frontend-react-js/src/pages/NotificationsFeedPage.css)
+* [NotificationsFeedPage.js](../frontend-react-js/src/pages/NotificationsFeedPage.js)
+
+Step 3: Verify from the browser
+![img](/img1/notification%20web%20page.png)
+
+### **RUN DYNAMODB LOCAL CONTAINER AND ENSURE IT WORKS**
+
+
