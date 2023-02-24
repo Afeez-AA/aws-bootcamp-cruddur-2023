@@ -5,6 +5,7 @@
 1. Containerize the application
 2.  Document the notification endpoint
 3.  Write a flask endpoint for notification
+4. Write a React Page for Notifications
 4.  Run DynamoDB Local Container and ensure it works
 5.  Run Postgres Container and ensure it works
 ### CONTAINERIZE THE APPLICATION 
@@ -46,7 +47,7 @@
         docker run -p 3000:3000 -d frontend-react-js
     ```
     ![img](/img1/running%20frontend.png)
-    * Verify the backend is running on the port in the browser
+    * Verify the frontend is running on the port in the browser
     ![img](/img1/frontend%20running.png)
 
 3. MULTIPLE CONTAINERS
@@ -58,4 +59,40 @@
 * Verify that the multiple containers are up and running from your browser;
 ![img](/img1/signed%20in%20to%20the%20cruddr.png)
 
-### WRITE A FLASK ENDPOINT FOR NOTIFICATION 
+### DOCUMENT THE NOTIFICATION ENDPOINT
+Add an endpoint for the notification tab
+```sh
+/api/activities/notifications:
+    get:
+      description: 'Return a feed activity for people I follow'
+      parameters: []
+      responses:
+        '200':
+          description: returns an array of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+
+```
+![img](/img1/notification%20added%20code.png)
+![img](/img1/notifcation%20documentation.png)
+
+
+
+### WRITE A FLASK ENDPOINT FOR NOTIFICATION
+Step1: Update the  [app.py](../backend-flask/app.py) with the following codes
+```sh
+    @app.route("/api/activities/notifications", methods=['GET'])
+def data_notifications():
+  data = NotificationsActivities.run()
+  return data, 200
+```
+```sh
+from services.notifications_activities import *
+```
+Step2: Create the [notifications_activities](../backend-flask/services/notifications_activities.py) file.
+
+Step3:
