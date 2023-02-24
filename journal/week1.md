@@ -15,21 +15,21 @@
     ```sh
         docker build -t  backend-flask .
     ```
-    ![img](/_docs/assets/img1/built%20backend%20image.png)
+    ![img](/img1/built%20backend%20image.png)
     * Run the container
     ```sh
         docker run --rm -p 4567:4567 -it -e FRONTEND_URL='*' -e BACKEND_URL='*' backend-flask
     ```
-    ![img](/_docs/assets/img1/dockerized%20backend%20running.png)
+    ![img](/img1/dockerized%20backend%20running.png)
 
     * Verify the backend is running on the port in the browser
-    ![img](/_docs/assets/img1/backend%20localhost.png)
+    ![img](/img1/backend%20localhost.png)
 
     * Check the backend image ruuning
     ```sh
         docker images
     ```
-    ![img](/_docs/assets/img1/backend-image.png)
+    ![img](/img1/backend-image.png)
 
  2. FRONTEND
     * Add the [Frontend Dockerfile](../frontend-react-js/Dockerfile) in the `./frontend-react-js` directory.
@@ -40,14 +40,14 @@
     ```sh
         docker build -t  frontend-react-js .
     ```
-    ![img](/_docs/assets/img1/build-frontend-container.png)
+    ![img](/img1/build-frontend-container.png)
     * Run the container
     ```sh
         docker run -p 3000:3000 -d frontend-react-js
     ```
-    ![img](/_docs/assets/img1/running%20frontend.png)
+    ![img](/img1/running%20frontend.png)
     * Verify the backend is running on the port in the browser
-    ![img](/_docs/assets/img1/frontend%20running.png)
+    ![img](/img1/frontend%20running.png)
 
 3. MULTIPLE CONTAINERS
 * Create a [docker-compose.yml](../docker-compose.yml) at the project root directory
@@ -56,6 +56,6 @@
         docker compose up -d
     ```
 * Verify that the multiple containers are up and running from your browser;
-![img](/_docs/assets/img1/signed%20in%20to%20the%20cruddr.png)
+![img](/img1/signed%20in%20to%20the%20cruddr.png)
 
 ### WRITE A FLASK ENDPOINT FOR NOTIFICATION 
