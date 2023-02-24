@@ -216,26 +216,28 @@ volumes:
     driver: local
 ```
 
-Step4: Verify
-![img](/img1/postgres%20verified.png)
+Step4: Verify that postgres is well integrated
+ ![img](/img1/postgres%20verified.png)
 ## **HOMEWORK CHALLENGE**
 1. Run the dockerfile CMD as an external script
 2. Push and tag a image to DockerHub
 3. Use multi-stage building for a Dockerfile build
 4. Implement a healthcheck in the V3 Docker compose file
-5. Researched the best practices of Dockerfiles and implemented it in your Dockerfile
+5. Researched the best practices of Dockerfiles and implement it in your Dockerfile
 6. Installed Docker on my localmachine and got the same containers running.
 7. Launch an EC2 instance that has docker installed, and pull a container
 ### 1. **RUN THE DOCKERFILE CMD AS AN EXTERNAL SCRIPT**
-Step1: Backend--Create a start.sh file
+Step1: 
+Backend
+* Create a start.sh file
 ```sh
 #!/bin/sh
 python3 -m flask run --host=0.0.0.0 --port=4567
 
 ```
-Step2: Update the docker file
+* Update the docker file
 ```sh
-    FROM python:3.10-slim-buster
+FROM python:3.10-slim-buster
 
 WORKDIR /backend-flask
 
@@ -250,14 +252,47 @@ EXPOSE ${PORT}
 CMD [ "sh", "start.sh" ]
 
 ```
-Step3: Give the `start.sh` executable permission, then build the image and run the container.
+Step2: Frontend
+* Create a `start.sh` file
+```sh
+#!/bin/bash
+
+npm start
+
+```
+* Update the docker file
+```sh
+FROM node:16.18
+
+ENV PORT=3000
+
+COPY . /frontend-react-js
+WORKDIR /frontend-react-js
+RUN npm install
+EXPOSE ${PORT}
+CMD ["/bin/bash", "start.sh"]
+
+```
+Step3: Give the `start.sh` executable permission, then build the images and run the containers.
 ```sh
     chmod +x start.sh
+```
+```sh
+    docker compose up
 ```
 ### 2. **PUSH AND TAG A IMAGE TO DOCKERHUB**
 ![img](/img1/pushed%20docker%20image%20terminal.png)
 ![img](/img1/pushed%20docker%20image%20web.png)
 
+### 3. **USE MULTI-STAGE BUILDING FOR A DOCKERFILE BUILD**
+ The Dockerfile has two stages. The first stage builds the application using a Node.js image, and the second stage creates a production image using an Nginx image.
+```sh
+
+
+```
+
+### 4. **IMPLEMENT A HEALTHCHECK IN THE V3 DOCKER COMPOSE FILE**
+### 5. **IMPLEMENTED BEST PRACTICE FOR THE DOCKER FILES ABOVE**
 ### 6. **INSTALLED DOCKER ON MY LOCALMACHINE AND GOT THE SAME CONTAINERS RUNNING.**
 Step1: Install Docker
 ```sh
