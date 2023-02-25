@@ -282,9 +282,37 @@ Step3: Then build the images and run the containers.
 ![img](/img1/pushed%20docker%20image%20web.png)
 
 ### 3. **USE MULTI-STAGE BUILDING FOR A DOCKERFILE BUILD**
- The Dockerfile has two stages. The first stage builds the application using a Node.js image, and the second stage creates a production image using an Nginx image.
 ```sh
+# Stage 1: Build the application
+FROM python:3.10-slim-buster AS builder
 
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install --user --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# Stage 2: Run the application
+FROM python:3.10-slim-buster
+
+WORKDIR /backend-flask
+
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
+
+COPY start.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start.sh
+
+RUN apt-get update 
+RUN apt-get install -y gcc
+RUN apt-get install -y curl
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+
+CMD [ "/usr/local/bin/start.sh"]
 
 ```
 
