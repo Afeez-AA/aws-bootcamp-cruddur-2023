@@ -292,4 +292,4 @@ Step6: Verify
 * Last 10 minutes
   ![img](../img2/last%2010%20minutes.png)
 
-***Thank you and see you next week!!!***
+***Thank you and see you next week!!!!***
