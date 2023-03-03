@@ -26,3 +26,6 @@
 # -curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 # -unzip awscliv2.zip
 # -sudo ./aws/install
+
+export ROLLBAR_ACCESS_TOKEN="c5abdc75c20e43fea59da0f3e6da5d91"
+gp env ROLLBAR_ACCESS_TOKEN="c5abdc75c20e43fea59da0f3e6da5d91"
