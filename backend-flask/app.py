@@ -13,6 +13,8 @@ from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
+from lib.cognito_token_verification import CognitoTokenVerification
+
 
 
 # Honeycomb instrumentation ...........
@@ -68,6 +70,13 @@ tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
 
+
+cognito_token_verification = CognitoTokenVerification (
+  user_pool_id=os.getenv("AWS_COGNITO_USER_POOL_ID"), 
+  user_pool_client_id=os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"), 
+  region=os.getenv("AWS_DEFAULT_REGION")
+)
+
 # X-RAY .......
 # XRayMiddleware(app, xray_recorder)
 
@@ -80,14 +89,20 @@ RequestsInstrumentor().instrument()
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
+# cors = CORS(
+#   app, 
+#   resources={r"/api/*": {"origins": origins}},
+#   expose_headers="location,link",
+#   allow_headers="content-type,if-modified-since",
+#   methods="OPTIONS,GET,HEAD,POST"
+# )
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
-
 # Cloudwatch .....
 # @app.after_request
 # def after_request(response):
@@ -155,6 +170,7 @@ def data_create_message():
   else:
     return model['data'], 200
   return
+
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
