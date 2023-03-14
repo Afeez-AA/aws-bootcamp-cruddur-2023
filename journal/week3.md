@@ -358,6 +358,7 @@ const onsubmit_confirm_code = async (event) => {
   }
   return false
 }
+```
 
 ![img](../img3/recovery%20code%20sent.png)
 ![img](../img3/signedin%20confirmed%20.png)
