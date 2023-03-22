@@ -46,7 +46,7 @@ aws rds create-db-instance \
 ### 3. REMOTELY CONNECT TO RDS INSTANCE
 Remotely connected and added a database
 ```sh
-  createdb cruddur -h localhost -U postgres
+  create database cruddur;
 ```
 ```sh
   psql -U postgres -h localhost
