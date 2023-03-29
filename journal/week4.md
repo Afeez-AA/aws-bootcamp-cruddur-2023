@@ -7,7 +7,7 @@
 5. Write several bash scripts for database operations
 6. Operate common SQL commands ####################
 7. Create a schema SQL file by hand ###############
-8. Work with UUIDs and PSQL extensions ##########
+8. Work with UUIDs and PSQL extensions
 9. Implement a postgres client for python using a connection pool
 10. Troubleshoot common SQL errors
 11. Implement a Lambda that runs in a VPC and commits code to RDS
@@ -81,7 +81,6 @@ Remotely connected and added a database
   DELETE FROM table_name WHERE condition; -- Delete data  from a table
 
 ```
-![img](../img4/databaseCommands.png)
 ### 6. WORK WITH UUIDS AND PSQL EXTENSIONS
 Add the following code to the db/schema.sql file
 ```sh 

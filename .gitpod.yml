@@ -22,6 +22,10 @@ tasks:
       cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
       npm i
       exit
+ports:
+  - port: 5432
+    onOpen: ignore
+    visibility: public
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
