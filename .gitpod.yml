@@ -17,15 +17,18 @@ tasks:
       sudo apt install -y postgresql-client-13 libpq-dev
 
 
+    command: |
+      export GITPOD_IP=$(curl ifconfig.me)
+      source  "$THEIA_WORKSPACE_ROOT/backend-flask/rds-update-sg-rule"
+
+
+
   - name: npm-install
     init: |
       cd /workspace/aws-bootcamp-cruddur-2023/frontend-react-js
       npm i
       exit
-ports:
-  - port: 5432
-    onOpen: ignore
-    visibility: public
+
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
