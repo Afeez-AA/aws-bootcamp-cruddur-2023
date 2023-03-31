@@ -140,7 +140,7 @@ export default function RecoverPage() {
     }
 
   let form;
-  if (formState == 'send_code') {
+  if (formState === 'send_code') {
     form = send_code()
   }
   else if (formState == 'confirm_code') {
