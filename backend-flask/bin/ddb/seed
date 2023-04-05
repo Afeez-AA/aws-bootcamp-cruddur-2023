@@ -6,18 +6,21 @@ import sys
 from datetime import datetime, timedelta, timezone
 import uuid
 
+# get the backend-flask dir.
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
+
+# we can do this line because we make backend-flask dir searchable
 from lib.db import db
 
 attrs = {
   'endpoint_url': 'http://localhost:8000'
 }
 # unset endpoint url for use with production database
-if len(sys.argv) == 2:
-  if "prod" in sys.argv[1]:
-    attrs = {}
+if "prod" in sys.argv:
+  attrs = {}
+
 ddb = boto3.client('dynamodb',**attrs)
 
 def get_user_uuids():
@@ -34,9 +37,12 @@ def get_user_uuids():
         )
   """
   users = db.query_array_json(sql,{
-    'my_handle':  'afeezadeboye',
-    'other_handle': 'jamaladeboye'
+    'my_handle':  'andrewbrown',
+    'other_handle': 'bayko'
   })
+  # the next two lines will assign my_user to andrew user, other_user to bayko
+  # `next` will iterate over list of dicts of two users, it will select the dict with handle approve the condition
+  # None will be assigned if user with the handle wasn't there (if we didn't run seed script)
   my_user    = next((item for item in users if item["handle"] == 'andrewbrown'), None)
   other_user = next((item for item in users if item["handle"] == 'bayko'), None)
   results = {
@@ -230,7 +236,8 @@ for i in range(len(lines)):
     print(lines[i])
     raise 'invalid line'
 
-  created_at = (now + timedelta(minutes=i)).isoformat()
+  # created_at = (now + timedelta(minutes=i)).isoformat()
+  created_at = (now + timedelta(hours=-3) + timedelta(minutes=i)).isoformat()
   create_message(
     client=ddb,
     message_group_uuid=message_group_uuid,
