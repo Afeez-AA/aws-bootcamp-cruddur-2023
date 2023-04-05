@@ -37,14 +37,14 @@ def get_user_uuids():
         )
   """
   users = db.query_array_json(sql,{
-    'my_handle':  'andrewbrown',
-    'other_handle': 'bayko'
+    'my_handle':  'afeezmock',
+    'other_handle': 'zainabmock'
   })
-  # the next two lines will assign my_user to andrew user, other_user to bayko
+  # the next two lines will assign my_user to afeez user, other_user to bayko
   # `next` will iterate over list of dicts of two users, it will select the dict with handle approve the condition
   # None will be assigned if user with the handle wasn't there (if we didn't run seed script)
-  my_user    = next((item for item in users if item["handle"] == 'andrewbrown'), None)
-  other_user = next((item for item in users if item["handle"] == 'bayko'), None)
+  my_user    = next((item for item in users if item["handle"] == 'afeezmock'), None)
+  other_user = next((item for item in users if item["handle"] == 'zainabmock'), None)
   results = {
     'my_user': my_user,
     'other_user': other_user

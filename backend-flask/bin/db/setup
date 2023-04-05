@@ -1,14 +1,19 @@
 #! /usr/bin/bash
--e # stop if it fails if any source fails at any point
+set -e # stop if it fails if any source fails at any point
 
+
+echo "#########################################################################"
 CYAN='\033[1;36m'
 NO_COLOR='\033[0m'
 LABEL="db-setup"
 printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
+echo "#########################################################################"
 
-bin_path="$(realpath .)/bin"
 
-source "$bin_path/db-drop"
-source "$bin_path/db-create"
-source "$bin_path/db-schema-load"
-source "$bin_path/db-seed"
+
+bin_path="$(realpath .)/bin/db"
+
+source "$bin_path/drop"
+source "$bin_path/create"
+source "$bin_path/schema-load"
+source "$bin_path/seed"
