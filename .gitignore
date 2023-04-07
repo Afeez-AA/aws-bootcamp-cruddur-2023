@@ -3,3 +3,5 @@ aws
 docker-compose.yml
 docker/**/*
 sheet
+docker
+frontend-react-js/node_modules

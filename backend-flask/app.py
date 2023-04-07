@@ -154,6 +154,7 @@ def data_message_groups():
   except TokenVerifyError as e:
     # unauthenicatied request
     app.logger.debug(e)
+    # 401 error means you are trying to access something only looged in users can access to.
     return {}, 401
 
 @app.route("/api/messages/<string:message_group_uuid>", methods=['GET'])
