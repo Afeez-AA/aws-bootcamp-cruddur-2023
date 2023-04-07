@@ -14,7 +14,15 @@ echo "#########################################################################"
 bin_path="$(realpath .)/bin/db"
 
 source "$bin_path/drop"
+echo "##################################################################"
+sleep 2
 source "$bin_path/create"
+echo "##################################################################"
+sleep 2
 source "$bin_path/schema-load"
+echo "##################################################################"
+sleep 2
 source "$bin_path/seed"
-source "$bin_path/update_cognito_user_ids"
+echo "##################################################################"
+sleep 2
+python "$bin_path/update_cognito_user_ids"
