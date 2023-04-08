@@ -31,11 +31,18 @@ def get_my_user_uuid():
     WHERE
       users.handle =%(handle)s
   """
+<<<<<<< HEAD
     uuid = db.query_value(sql, {
         'handle':  'A.A'
     })
     return uuid
 
+=======
+  uuid = db.query_value(sql,{
+    'handle':  'andrewbrown'
+  })
+  return uuid
+>>>>>>> parent of 4213351 (customized the mock users)
 
 my_user_uuid = get_my_user_uuid()
 print(f"my-uuid: {my_user_uuid}")
