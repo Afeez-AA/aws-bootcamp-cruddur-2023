@@ -26,15 +26,4 @@ source "$bin_path/seed"
 echo "##################################################################"
 sleep 2
 python "$bin_path/update_cognito_user_ids"
-=======
-source "$bin_path/db-drop"
-source "$bin_path/db-create"
-source "$bin_path/db-schema-load"
-source "$bin_path/db-seed"
->>>>>>> parent of 4213351 (customized the mock users)
-=======
-source "$bin_path/db-drop"
-source "$bin_path/db-create"
-source "$bin_path/db-schema-load"
-source "$bin_path/db-seed"
->>>>>>> parent of 4213351 (customized the mock users)
+
