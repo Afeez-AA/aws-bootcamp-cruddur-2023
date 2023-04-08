@@ -6,21 +6,18 @@ import sys
 from datetime import datetime, timedelta, timezone
 import uuid
 
-# get the backend-flask dir.
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
-
-# we can do this line because we make backend-flask dir searchable
 from lib.db import db
 
 attrs = {
   'endpoint_url': 'http://localhost:8000'
 }
 # unset endpoint url for use with production database
-if "prod" in sys.argv:
-  attrs = {}
-
+if len(sys.argv) == 2:
+  if "prod" in sys.argv[1]:
+    attrs = {}
 ddb = boto3.client('dynamodb',**attrs)
 
 def get_user_uuids():
@@ -37,6 +34,7 @@ def get_user_uuids():
         )
   """
   users = db.query_array_json(sql,{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     'my_handle':  'A.A',
@@ -58,6 +56,11 @@ def get_user_uuids():
   my_user    = next((item for item in users if item["handle"] == 'A.A'), None)
   other_user = next((item for item in users if item["handle"] == 'zainabmock'), None)
 =======
+=======
+    'my_handle':  'afeezadeboye',
+    'other_handle': 'jamaladeboye'
+  })
+>>>>>>> parent of bdb1b30 (fixed the seed ddb)
   my_user    = next((item for item in users if item["handle"] == 'andrewbrown'), None)
   other_user = next((item for item in users if item["handle"] == 'bayko'), None)
 >>>>>>> parent of 4213351 (customized the mock users)
@@ -256,8 +259,7 @@ for i in range(len(lines)):
     print(lines[i])
     raise 'invalid line'
 
-  # created_at = (now + timedelta(minutes=i)).isoformat()
-  created_at = (now + timedelta(hours=-3) + timedelta(minutes=i)).isoformat()
+  created_at = (now + timedelta(minutes=i)).isoformat()
   create_message(
     client=ddb,
     message_group_uuid=message_group_uuid,
