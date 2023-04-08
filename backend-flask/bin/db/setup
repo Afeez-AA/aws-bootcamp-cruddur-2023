@@ -1,15 +1,10 @@
 #! /usr/bin/bash
--e # stop if it fails if any source fails at any point
+set -e # stop if it fails if any source fails at any point
 
 CYAN='\033[1;36m'
 NO_COLOR='\033[0m'
 LABEL="db-setup"
 printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
-
-bin_path="$(realpath .)/bin"
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 bin_path="$(realpath .)/bin/db"
 

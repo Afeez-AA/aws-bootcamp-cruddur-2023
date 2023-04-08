@@ -1,5 +1,5 @@
--- this file was manually created
-INSERT INTO public.users (display_name, handle, cognito_user_id)
+  -- this file was manually created
+INSERT INTO public.users (display_name, email, handle, cognito_user_id)
 VALUES
   ('Afeez Adeboye','afeezadeboyee@gmail.com' , 'A.A' ,'MOCK'),
   ('Jamal Adeboye','ja@test.co' , 'jamalmock' ,'MOCK'),

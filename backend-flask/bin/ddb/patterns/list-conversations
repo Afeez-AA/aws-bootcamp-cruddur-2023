@@ -12,42 +12,45 @@ sys.path.append(parent_path)
 from lib.db import db
 
 attrs = {
-  'endpoint_url': 'http://localhost:8000'
+    'endpoint_url': 'http://localhost:8000'
 }
 
 if len(sys.argv) == 2:
-  if "prod" in sys.argv[1]:
-    attrs = {}
+    if "prod" in sys.argv[1]:
+        attrs = {}
 
-dynamodb = boto3.client('dynamodb',**attrs)
+dynamodb = boto3.client('dynamodb', **attrs)
 table_name = 'cruddur-messages'
 
+
 def get_my_user_uuid():
-  sql = """
+    sql = """
     SELECT 
       users.uuid
     FROM users
     WHERE
       users.handle =%(handle)s
   """
-  uuid = db.query_value(sql,{
-    'handle':  'Fauziyyah'
-  })
-  return uuid
+    uuid = db.query_value(sql, {
+        'handle':  'A.A'
+    })
+    return uuid
+
 
 my_user_uuid = get_my_user_uuid()
 print(f"my-uuid: {my_user_uuid}")
-year = str(datetime.now().year)
+
+current_year = datetime.datetime.now().year
 # define the query parameters
 query_params = {
-  'TableName': table_name,
-      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
-  'ScanIndexForward': False,
-  'ExpressionAttributeValues': {
-    ':year': {'S': str(current_year) },
-    ':pk': {'S': f"GRP#{my_user_uuid}"}
-  },
-  'ReturnConsumedCapacity': 'TOTAL'
+    'TableName': table_name,
+    'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+    'ScanIndexForward': False,
+    'ExpressionAttributeValues': {
+        ':year': {'S': str(current_year)},
+        ':pk': {'S': f"GRP#{my_user_uuid}"}
+    },
+    'ReturnConsumedCapacity': 'TOTAL'
 }
 
 # query the table
