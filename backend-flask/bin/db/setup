@@ -9,6 +9,7 @@ printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
 bin_path="$(realpath .)/bin"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 bin_path="$(realpath .)/bin/db"
 
@@ -25,6 +26,12 @@ source "$bin_path/seed"
 echo "##################################################################"
 sleep 2
 python "$bin_path/update_cognito_user_ids"
+=======
+source "$bin_path/db-drop"
+source "$bin_path/db-create"
+source "$bin_path/db-schema-load"
+source "$bin_path/db-seed"
+>>>>>>> parent of 4213351 (customized the mock users)
 =======
 source "$bin_path/db-drop"
 source "$bin_path/db-create"
