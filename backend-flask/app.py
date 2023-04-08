@@ -103,6 +103,7 @@ cors = CORS(
   expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
+
 # Cloudwatch .....
 # @app.after_request
 # def after_request(response):
@@ -153,8 +154,8 @@ def data_message_groups():
   except TokenVerifyError as e:
     # unauthenicatied request
     app.logger.debug(e)
-    # 401 error means you are trying to access something only looged in users can access to.
     return {}, 401
+    
 
 @app.route("/api/messages/<string:message_group_uuid>", methods=['GET'])
 def data_messages(message_group_uuid):

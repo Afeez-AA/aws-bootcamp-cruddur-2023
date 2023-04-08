@@ -7,20 +7,18 @@ from jose.utils import base64url_decode
 class FlaskAWSCognitoError(Exception):
   pass
 
-
 class TokenVerifyError(Exception):
   pass
 
+def extract_access_token(request_headers):
+    access_token = None
+    auth_header = request_headers.get("Authorization")
+    if auth_header and " " in auth_header:
+        _, access_token = auth_header.split()
+    return access_token
 
-class CognitoTokenVerification:
-    def __init__(
-        self,
-        user_pool_id,
-        user_pool_client_id,
-        region,
-        request_client=None,
-        _jwk_keys=None,
-    ):
+class CognitoJwtToken:
+    def __init__(self, user_pool_id, user_pool_client_id, region, request_client=None):
         self.region = region
         if not self.region:
             raise FlaskAWSCognitoError("No AWS region provided")
@@ -31,16 +29,14 @@ class CognitoTokenVerification:
             self.request_client = requests.get
         else:
             self.request_client = request_client
-        if _jwk_keys:
-            self.jwk_keys = _jwk_keys
-        else:
-            self.jwk_keys = self._load_jwk_keys()
+        self._load_jwk_keys()
+
 
     def _load_jwk_keys(self):
         keys_url = f"https://cognito-idp.{self.region}.amazonaws.com/{self.user_pool_id}/.well-known/jwks.json"
         try:
             response = self.request_client(keys_url)
-            return response.json()["keys"]
+            self.jwk_keys = response.json()["keys"]
         except requests.exceptions.RequestException as e:
             raise FlaskAWSCognitoError(str(e)) from e
 
@@ -112,6 +108,7 @@ class CognitoTokenVerification:
 
         claims = self._extract_claims(token)
         self._check_expiration(claims, current_time)
-        # self._check_audience(claims)
+        self._check_audience(claims)
 
-        self.claims = claims
+        self.claims = claims 
+        return claims
