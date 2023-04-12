@@ -1,0 +1,68 @@
+# 1.This is used to save your AWS credential variables
+# export AWS_ACCESS_KEY_ID=""
+# export AWS_SECRET_ACCESS_KEY=""
+# export AWS_DEFAULT_REGION=us-east-1
+
+# 2. To confirm your account is properly linked 
+# -aws sts get-caller-identity
+
+# 3. To set billing alarm
+# -aws sns create-topic --name billing-alarm
+# -aws sns subscribe \
+#     --topic-arn TopicARN \
+#     --protocol email \
+# #     --notification-endpoint your@email.com
+# # -aws cloudwatch put-metric-alarm --cli-input-json file://aws/json/alarm_config.json
+
+# # 4. To set budget
+# # -aws sts get-caller-identity --query Account --output text
+# # -aws budgets create-budget \
+# #     --account-id AccountID \
+# #     --budget file://aws/json/budget.json \
+# #     --notifications-with-subscribers file://aws/json/budget-notifications-with-subscribers.json
+
+
+# # 5. This is to install aws cli
+# # -curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+# # -unzip awscliv2.zip
+# # -sudo ./aws/install
+
+# Week6 Cloudwatch command
+
+# aws logs create-log-group --log-group-name cruddur
+# aws logs put-retention-policy --log-group-name cruddur --retention-in-days 1
+
+
+
+
+# aws ecs create-cluster \
+# --cluster-name cruddur \
+# --service-connect-defaults namespace=cruddur
+
+
+
+
+# aws ecr create-repository \
+#   --repository-name cruddur-python \
+#   --image-tag-mutability MUTABLE
+
+
+# aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+
+
+
+# export ECR_PYTHON_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cruddur-python"
+# echo $ECR_PYTHON_URL
+
+# docker pull python:3.10-slim-buster
+# docker tag python:3.10-slim-buster $ECR_PYTHON_URL:3.10-slim-buster
+# docker push $ECR_PYTHON_URL:3.10-slim-buster
+
+
+
+
+
+
+
+
+
