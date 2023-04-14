@@ -58,7 +58,22 @@
 # docker tag python:3.10-slim-buster $ECR_PYTHON_URL:3.10-slim-buster
 # docker push $ECR_PYTHON_URL:3.10-slim-buster
 
+    "propagateTags": "SERVICE",
+    "serviceName": "backend-flask",
+    "taskDefinition": "backend-flask",
+    "serviceConnectConfiguration": {
+      "enabled": true,
+      "namespace": "cruddur",
+      "services": [
+        {
+          "portName": "backend-flask",
+          "discoveryName": "backend-flask",
+          "clientAliases": [{"port": 4567}]
+        }
+      ]
+    }
 
+    0ac2a5b2fd6c46cd80cc4767ceb84baa
 
 
 
